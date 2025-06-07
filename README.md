@@ -6,7 +6,7 @@ This is my first Data Engineering project where I built an end-to-end pipeline u
 
 ## 🧠 Objective
 
-- Ingest real-world COVID-19 CSV data from [Our World in Data](https://ourworldindata.org/)
+- Ingest real-world COVID-19 CSV data from [Our World in Data]([https://ourworldindata.org/](https://www.kaggle.com/datasets/georgesaavedra/covid19-dataset))
 - Clean and transform data using PySpark
 - Store intermediate results in Parquet format on S3
 - Query the final data using AWS Athena
