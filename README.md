@@ -1,40 +1,51 @@
-# 🛠️ CSV to Parquet Data Pipeline using AWS, Databricks & PySpark
+# 📦 CSV to Parquet Data Engineering Pipeline (AWS + Databricks + PySpark)
 
-This is a beginner-friendly end-to-end data engineering project where I built a pipeline to ingest, clean, transform, and query COVID-19 data using **AWS S3**, **Databricks (Community Edition)**, **PySpark**, and **Athena**.
-
----
-
-## 🚀 Project Overview
-
-- ✅ Ingested the **Our World in Data COVID-19 dataset (CSV)** into **Amazon S3**
-- 🧹 Cleaned missing values using **PySpark**:
-  - Categorical columns (`string`) → filled with `"Unknown"`
-  - Numeric columns (`int`, `double`) → filled with the **mean**
-- 🔄 Converted the dataset to **Parquet format**
-- 💾 Saved the transformed data back to **S3**
-- 🔍 Queried the Parquet data using **AWS Athena**
+This is my first Data Engineering project where I built an end-to-end pipeline using **AWS S3**, **Databricks Community Edition**, **PySpark**, and **AWS Athena**. The goal was to convert a raw CSV dataset into optimized Parquet format, perform basic data analysis, and make the data queryable using Athena.
 
 ---
 
-## 🧰 Tools & Technologies
+## 🧠 Objective
 
-- **AWS S3** – Storage for raw CSV and Parquet files  
-- **AWS IAM** – Secure programmatic access for Databricks  
-- **Databricks Community Edition** – Spark-powered data processing  
-- **PySpark** – Distributed data cleaning and transformation  
-- **Athena** – SQL querying directly on Parquet in S3
+- Ingest real-world COVID-19 CSV data from [Our World in Data](https://ourworldindata.org/)
+- Clean and transform data using PySpark
+- Store intermediate results in Parquet format on S3
+- Query the final data using AWS Athena
 
 ---
 
-## 📁 Folder Structure
+## 🔧 Tools & Technologies
 
-```text
-raw/
-└── owid-covid-data.csv           # Original dataset
+- **Apache Spark** (via Databricks Community Edition)
+- **PySpark**
+- **Amazon S3**
+- **AWS Athena**
+- **Parquet file format**
 
-clean/
-└── owid-covid-parquet/           # Cleaned parquet output
 
-athena-results/
-└── ...                           # Athena query outputs
-# aws-databricks-pipeline
+## ✅ Pipeline Steps
+
+1. **CSV Upload to S3**
+   - Uploaded `owid-covid-data.csv` to `s3://dj-databricks-pipeline/`
+
+2. **Data Cleaning with PySpark**
+   - Loaded data using Spark
+   - Filtered out rows with `continent IS NULL` (e.g., "World", "High income", etc.)
+   - Casted `date` column to proper date type
+
+3. **Data Analysis**
+   - Aggregated `new_cases` to calculate:
+     - Average
+     - Median (`percentile_approx`)
+     - Total per day
+   - Also explored per-country population and metrics
+
+4. **Data Writing to S3**
+   - Saved transformed data as Parquet to:
+     - `day_wise_parquet/`
+     - `country_wise_parquet/`
+
+5. **Querying with Athena**
+   - Defined external tables in Athena
+   - Queried Parquet data directly for insights
+
+
